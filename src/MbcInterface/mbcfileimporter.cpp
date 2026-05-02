@@ -45,9 +45,11 @@ void MbcFileImporter::parseRegisters(QString* pMbcFileContent)
     _lastErrorMessage.clear();
 
     QDomDocument domDocument;
-    QDomDocument::ParseResult result =
-      domDocument.setContent(*pMbcFileContent, QDomDocument::ParseOption::UseNamespaceProcessing);
-    if (result)
+    QString errorMsg;
+    int errorLine;
+    int errorColumn;
+
+    if (domDocument.setContent(*pMbcFileContent, true, &errorMsg, &errorLine, &errorColumn))
     {
         QDomElement root = domDocument.documentElement();
         if (root.tagName().toLower().trimmed() == MbcFileDefinitions::cModbusControlTag)
@@ -80,9 +82,9 @@ void MbcFileImporter::parseRegisters(QString* pMbcFileContent)
     else
     {
         _lastErrorMessage = tr("Parse error at line %1, column %2:\n%3")
-                              .arg(result.errorLine)
-                              .arg(result.errorColumn)
-                              .arg(result.errorMessage);
+                              .arg(errorLine)
+                              .arg(errorColumn)
+                              .arg(errorMsg);
         bRet = false;
     }
 

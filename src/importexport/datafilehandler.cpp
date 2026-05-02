@@ -13,6 +13,7 @@
 #include "util/fileselectionhelper.h"
 #include "util/util.h"
 
+#include <QTextStream>
 #include <QWidget>
 #include <QProgressDialog>
 

@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QObject>
+#include <QTextStream>
 
 // Forward declaration
 class GuiModel;

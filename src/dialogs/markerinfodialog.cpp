@@ -16,11 +16,21 @@ MarkerInfoDialog::MarkerInfoDialog(GuiModel* pGuiModel, QWidget* parent)
     _expressionMask = 0;
 
     /* Update mask */
-    connect(_pUi->checkAverage, &QCheckBox::checkStateChanged, this, &MarkerInfoDialog::checkBoxStatechanged);
-    connect(_pUi->checkSlope, &QCheckBox::checkStateChanged, this, &MarkerInfoDialog::checkBoxStatechanged);
-    connect(_pUi->checkMaximum, &QCheckBox::checkStateChanged, this, &MarkerInfoDialog::checkBoxStatechanged);
-    connect(_pUi->checkMinimum, &QCheckBox::checkStateChanged, this, &MarkerInfoDialog::checkBoxStatechanged);
-    connect(_pUi->checkDifference, &QCheckBox::checkStateChanged, this, &MarkerInfoDialog::checkBoxStatechanged);
+    connect(_pUi->checkAverage, &QCheckBox::stateChanged, this, [this](int state) {
+        checkBoxStatechanged(static_cast<Qt::CheckState>(state));
+    });
+    connect(_pUi->checkSlope, &QCheckBox::stateChanged, this, [this](int state) {
+        checkBoxStatechanged(static_cast<Qt::CheckState>(state));
+    });
+    connect(_pUi->checkMaximum, &QCheckBox::stateChanged, this, [this](int state) {
+        checkBoxStatechanged(static_cast<Qt::CheckState>(state));
+    });
+    connect(_pUi->checkMinimum, &QCheckBox::stateChanged, this, [this](int state) {
+        checkBoxStatechanged(static_cast<Qt::CheckState>(state));
+    });
+    connect(_pUi->checkDifference, &QCheckBox::stateChanged, this, [this](int state) {
+        checkBoxStatechanged(static_cast<Qt::CheckState>(state));
+    });
 
     const quint32 mask = _pGuiModel->markerExpressionMask();
 

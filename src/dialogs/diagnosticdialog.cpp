@@ -39,7 +39,9 @@ DiagnosticDialog::DiagnosticDialog(DiagnosticModel* pDiagnosticModel, QWidget* p
     _pUi->listError->setUniformItemSizes(true); // For performance
     _pUi->listError->setSelectionMode(QAbstractItemView::MultiSelection);
 
-    connect(_pUi->checkDebugLogs, &QCheckBox::checkStateChanged, this, &DiagnosticDialog::handleEnableDebugLog);
+    connect(_pUi->checkDebugLogs, &QCheckBox::stateChanged, this, [this](int state) {
+        handleEnableDebugLog(static_cast<Qt::CheckState>(state));
+    });
 
     connect(_pUi->listError->verticalScrollBar(), &QScrollBar::valueChanged, this, &DiagnosticDialog::handleScrollbarChange);
 
@@ -50,8 +52,9 @@ DiagnosticDialog::DiagnosticDialog(DiagnosticModel* pDiagnosticModel, QWidget* p
     connect(_pDiagnosticModel, &QAbstractItemModel::rowsInserted, this, &DiagnosticDialog::handleLogsChanged);
     connect(_pDiagnosticModel, &QAbstractItemModel::rowsRemoved, this, &DiagnosticDialog::handleLogsChanged);
 
-    connect(_pUi->checkAutoScroll, &QCheckBox::checkStateChanged, this,
-            &DiagnosticDialog::handleCheckAutoScrollChanged);
+    connect(_pUi->checkAutoScroll, &QCheckBox::stateChanged, this, [this](int state) {
+        handleCheckAutoScrollChanged(static_cast<Qt::CheckState>(state));
+    });
 
     connect(_pUi->pushClear, &QPushButton::clicked, this, &DiagnosticDialog::handleClearButton);
     connect(_pUi->pushExport, &QPushButton::clicked, this, &DiagnosticDialog::handleExportLog);

@@ -4,6 +4,7 @@
 #include <QColor>
 #include <QDateTime>
 #include <QIODevice>
+#include <QTextStream>
 
 const QString DataFileParser::_cDatePattern = QString(R"(\s*(\d{1,2})[\-\/\s](\d{1,2})[\-\/\s](\d{4})\s*([0-2][0-9]):([0-5][0-9]):([0-5][0-9])[.,]?(\d{0,3}))");
 const QString DataFileParser::_cTrimStrimPattern = QString(R"(\"?(.[^\"]*)\"?)");
@@ -84,7 +85,7 @@ bool DataFileParser::processDataFile(QTextStream * pDataStream, FileData * pData
 
                     foreach(QString strColor, idList)
                     {
-                        if (QColor::isValidColorName(strColor))
+                        if (QColor(strColor).isValid())
                         {
                             pData->colors.append(QColor(strColor));
                         }

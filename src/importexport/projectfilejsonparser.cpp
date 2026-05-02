@@ -3,6 +3,7 @@
 
 #include "importexport/projectfiledefinitions.h"
 
+#include <QColor>
 #include <QDir>
 #include <QFileInfo>
 #include <QJsonDocument>
@@ -319,7 +320,7 @@ GeneralError ProjectFileJsonParser::parseScope(const QJsonArray& scopeArray, Sco
         if (regObj.contains(ProjectFileDefinitions::cColorTag))
         {
             QString colorStr = regObj[ProjectFileDefinitions::cColorTag].toString();
-            if (QColor::isValidColorName(colorStr))
+            if (QColor(colorStr).isValid())
             {
                 reg.bColor = true;
                 reg.color = QColor(colorStr);

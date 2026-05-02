@@ -3,6 +3,8 @@
 
 #include "util/formatrelativetime.h"
 
+#include <QDateTime>
+#include <QTimeZone>
 #include <QTest>
 
 #define ADD_TEST(ticks, result)      QTest::newRow(result) << static_cast<qint64>(ticks) << result

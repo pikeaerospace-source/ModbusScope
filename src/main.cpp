@@ -1,6 +1,5 @@
 #include "mainapp.h"
 #include <QApplication>
-#include <QStyleHints>
 
 #ifdef WIN32
 #include "Synchapi.h"
@@ -9,7 +8,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QGuiApplication::styleHints()->setColorScheme(Qt::ColorScheme::Light);
     QCoreApplication::setOrganizationName("ModbusScope");
     QCoreApplication::setApplicationName("ModbusScope");
 

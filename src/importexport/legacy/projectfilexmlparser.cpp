@@ -2,6 +2,7 @@
 #include "projectfilexmlparser.h"
 
 #include "importexport/projectfiledefinitions.h"
+#include <QColor>
 
 #include <QDir>
 #include <QFileInfo>
@@ -37,14 +38,16 @@ GeneralError ProjectFileXmlParser::parseFile(const QString& fileContent,
     GeneralError parseErr;
     _projectBaseDir = projectBaseDir;
 
-    QDomDocument::ParseResult result =
-      _domDocument.setContent(fileContent, QDomDocument::ParseOption::UseNamespaceProcessing);
-    if (!result)
+    QString errorMsg;
+    int errorLine;
+    int errorColumn;
+
+    if (!_domDocument.setContent(fileContent, true, &errorMsg, &errorLine, &errorColumn))
     {
         parseErr.reportError(QString("Parse error at line %1, column %2:\n%3")
-                               .arg(result.errorLine)
-                               .arg(result.errorColumn)
-                               .arg(result.errorMessage));
+                               .arg(errorLine)
+                               .arg(errorColumn)
+                               .arg(errorMsg));
         return parseErr;
     }
 
@@ -500,7 +503,7 @@ GeneralError ProjectFileXmlParser::parseRegisterTag(const QDomElement& element, 
         }
         else if (child.tagName() == ProjectFileDefinitions::cColorTag)
         {
-            if (QColor::isValidColorName(child.text()))
+            if (QColor(child.text()).isValid())
             {
                 pRegisterSettings->bColor = true;
                 pRegisterSettings->color = QColor(child.text());
